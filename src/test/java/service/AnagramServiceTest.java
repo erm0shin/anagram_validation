@@ -1,5 +1,7 @@
-import org.example.AnagramUtils;
+package service;
+
 import org.example.model.ValidateAnagramCommand;
+import org.example.service.AnagramService;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -7,16 +9,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AnagramTest {
+public class AnagramServiceTest {
 
-    private final AnagramUtils utils = new AnagramUtils();
+    private final AnagramService anagramService = new AnagramService();
 
     @ParameterizedTest
     @MethodSource("provideSimpleAnagrams")
     void testDefaultAnagramLogic(final String text1, final String text2) {
-        assertTrue(utils.isAnagram(ValidateAnagramCommand.builder()
+        assertTrue(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
                 .build()));
@@ -33,7 +36,7 @@ public class AnagramTest {
     @ParameterizedTest
     @MethodSource("provideRegisteredAnagrams")
     void testRegisteredAnagramLogic(final String text1, final String text2) {
-        assertTrue(utils.isAnagram(ValidateAnagramCommand.builder()
+        assertTrue(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
                 .ignoreRegister(true)
@@ -51,7 +54,7 @@ public class AnagramTest {
     @ParameterizedTest
     @MethodSource("provideSpacedAnagrams")
     void testSpacedAnagramLogic(final String text1, final String text2) {
-        assertTrue(utils.isAnagram(ValidateAnagramCommand.builder()
+        assertTrue(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
                 .symbolsToIgnore(Set.of(' '))
@@ -69,7 +72,7 @@ public class AnagramTest {
     @ParameterizedTest
     @MethodSource("provideUTF16Anagrams")
     void testUTF16AnagramLogic(final String text1, final String text2) {
-        assertTrue(utils.isAnagram(ValidateAnagramCommand.builder()
+        assertTrue(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
                 .build()));
@@ -86,7 +89,7 @@ public class AnagramTest {
     @ParameterizedTest
     @MethodSource("provideComplexAnagrams")
     void testComplexAnagramLogic(final String text1, final String text2) {
-        assertTrue(utils.isAnagram(ValidateAnagramCommand.builder()
+        assertTrue(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
                 .ignoreRegister(true)
@@ -99,6 +102,25 @@ public class AnagramTest {
                 Arguments.of("Tom Marvolo Riddle", "I am Lord Voldemort"),
                 Arguments.of("Vacation time", "I am not active"),
                 Arguments.of("For the evil that men do", "doth live on after them")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNonAnagrams")
+    void testNonAnagramLogic(final String text1, final String text2) {
+        assertFalse(anagramService.isAnagram(ValidateAnagramCommand.builder()
+                .text1(text1)
+                .text2(text2)
+                .ignoreRegister(true)
+                .symbolsToIgnore(Set.of(' '))
+                .build()));
+    }
+
+    private static Stream<Arguments> provideNonAnagrams() {
+        return Stream.of(
+                Arguments.of("anagram", "not anagram"),
+                Arguments.of("some words", "other words"),
+                Arguments.of("Eleven plus one", "Ten plus two")
         );
     }
 

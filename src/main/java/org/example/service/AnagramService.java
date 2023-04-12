@@ -1,11 +1,19 @@
-package org.example;
+package org.example.service;
 
 import org.example.model.ValidateAnagramCommand;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnagramUtils {
+public class AnagramService {
+
+    private final ValidateAnagramCommandBuilder commandBuilder = new ValidateAnagramCommandBuilder();
+
+    public boolean isAnagram(final String text1, final String text2) {
+        commandBuilder.buildCommand(text1, text2);
+        final var command = commandBuilder.buildCommand(text1, text2);
+        return isAnagram(command);
+    }
 
     public boolean isAnagram(final ValidateAnagramCommand command) {
         final Map<Character, Integer> charToCountMap = new HashMap<>();
