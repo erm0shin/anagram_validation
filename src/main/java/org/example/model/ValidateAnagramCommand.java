@@ -12,7 +12,7 @@ public class ValidateAnagramCommand {
     private final String text1;
     private final String text2;
     @Builder.Default
-    private final boolean ignoreRegister = false;
+    private final boolean ignoreCase = false;
     @Builder.Default
     private final Set<Character> symbolsToIgnore = new HashSet<>();
 }

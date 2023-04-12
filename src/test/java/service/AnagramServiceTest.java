@@ -39,7 +39,7 @@ public class AnagramServiceTest {
         assertTrue(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
-                .ignoreRegister(true)
+                .ignoreCase(true)
                 .build()));
     }
 
@@ -92,7 +92,7 @@ public class AnagramServiceTest {
         assertTrue(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
-                .ignoreRegister(true)
+                .ignoreCase(true)
                 .symbolsToIgnore(Set.of(' '))
                 .build()));
     }
@@ -111,7 +111,7 @@ public class AnagramServiceTest {
         assertFalse(anagramService.isAnagram(ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
-                .ignoreRegister(true)
+                .ignoreCase(true)
                 .symbolsToIgnore(Set.of(' '))
                 .build()));
     }

@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class ValidateAnagramCommandBuilder {
-    private static final String IGNORE_REGISTER_PROPERTY_KEY = "ignoreRegister";
+    private static final String IGNORE_REGISTER_PROPERTY_KEY = "ignoreCase";
     private static final String SYMBOLS_TO_IGNORE_PROPERTY_KEY = "symbolsToIgnore";
 
     private volatile boolean propertiesLoaded = false;
-    private volatile boolean ignoreRegister = false;
+    private volatile boolean ignoreCase = false;
     private volatile Set<Character> symbolsToIgnore = new HashSet<>();
 
     public void init() {
@@ -30,7 +30,7 @@ public class ValidateAnagramCommandBuilder {
                     .map(s -> s.split("="))
                     .collect(Collectors.toMap(s -> s[0], s -> s[1]));
 
-            ignoreRegister = Boolean.parseBoolean(properties.get(IGNORE_REGISTER_PROPERTY_KEY));
+            ignoreCase = Boolean.parseBoolean(properties.get(IGNORE_REGISTER_PROPERTY_KEY));
             // Remove surrounding quotes
             properties.compute(SYMBOLS_TO_IGNORE_PROPERTY_KEY, (key, oldValue) -> oldValue.substring(1, oldValue.length() - 1));
             symbolsToIgnore = properties.get(SYMBOLS_TO_IGNORE_PROPERTY_KEY).chars()
@@ -38,7 +38,7 @@ public class ValidateAnagramCommandBuilder {
                     .collect(Collectors.toSet());
         } catch (final Exception e) {
             log.warn("Error occurred by loading properties from file", e);
-            ignoreRegister = false;
+            ignoreCase = false;
             symbolsToIgnore = new HashSet<>();
         }
         propertiesLoaded = true;
@@ -53,7 +53,7 @@ public class ValidateAnagramCommandBuilder {
         return ValidateAnagramCommand.builder()
                 .text1(text1)
                 .text2(text2)
-                .ignoreRegister(ignoreRegister)
+                .ignoreCase(ignoreCase)
                 .symbolsToIgnore(symbolsToIgnore)
                 .build();
     }

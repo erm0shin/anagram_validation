@@ -21,7 +21,7 @@ public class ValidateAnagramCommandBuilderTest {
         assertAll(
                 () -> assertEquals(TEXT1, command.getText1()),
                 () -> assertEquals(TEXT2, command.getText2()),
-                () -> assertTrue(command.isIgnoreRegister()),
+                () -> assertTrue(command.isIgnoreCase()),
                 () -> assertEquals(Set.of(' ', ','), command.getSymbolsToIgnore())
         );
     }
@@ -33,7 +33,7 @@ public class ValidateAnagramCommandBuilderTest {
         assertAll(
                 () -> assertEquals(TEXT1, command.getText1()),
                 () -> assertEquals(TEXT2, command.getText2()),
-                () -> assertTrue(command.isIgnoreRegister()),
+                () -> assertTrue(command.isIgnoreCase()),
                 () -> assertEquals(Set.of(' ', ','), command.getSymbolsToIgnore())
         );
     }
@@ -45,7 +45,7 @@ public class ValidateAnagramCommandBuilderTest {
         assertAll(
                 () -> assertEquals(TEXT1, command.getText1()),
                 () -> assertEquals(TEXT2, command.getText2()),
-                () -> assertFalse(command.isIgnoreRegister()),
+                () -> assertFalse(command.isIgnoreCase()),
                 () -> assertEquals(Collections.emptySet(), command.getSymbolsToIgnore())
         );
     }

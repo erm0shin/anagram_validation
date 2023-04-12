@@ -29,7 +29,7 @@ public class AnagramService {
             final ValidateAnagramCommand command
     ) {
         for (int i = 0; i < str.length(); i++) {
-            final char curSymbol = command.isIgnoreRegister() ? Character.toLowerCase(str.charAt(i)) : str.charAt(i);
+            final char curSymbol = command.isIgnoreCase() ? Character.toLowerCase(str.charAt(i)) : str.charAt(i);
             if (!command.getSymbolsToIgnore().contains(curSymbol)) {
                 charToCountMap.merge(curSymbol, increment, Integer::sum);
             }
